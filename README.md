@@ -1,9 +1,9 @@
 # PatAlert
 
 AI-powered design patent risk scanner. Upload a product image or describe your design, and PatAlert analyzes it against live USPTO design patent data to flag potential infringement risks before you ship.
-<p align="center" width="100%">
+
+
 <video src="https://www.youtube.com/watch?v=xKIynnMVOB4" width="80%" controls></video>
-</p>
 
 
 ## What it does
