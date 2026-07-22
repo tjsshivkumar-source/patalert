@@ -4,6 +4,7 @@ AI-powered design patent risk scanner. Upload a product image or describe your d
 
 
 ### DEMO VIDEO: https://www.youtube.com/watch?v=xKIynnMVOB4
+### LIVE LINK: https://patalert.vercel.app/
 
 
 ## What it does
