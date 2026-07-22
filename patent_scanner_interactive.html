@@ -1,0 +1,527 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+#ps{
+  --bk:#0A0A0A;--bks:#111;--sf:#181818;--sfh:#222;--sfa:#2A2A2A;
+  --bd:#2A2A2A;--bdh:#3A3A3A;--tp:#F0F0F0;--ts:#999;--tm:#666;
+  --wh:#F0F0F0;--rl:#4ade80;--rm:#fbbf24;--rh:#f87171;--rc:#ef4444;
+  --sw:210px;
+  font-family:'Chakra Petch',monospace;font-size:13px;color:var(--tp);
+  background:var(--bk);display:flex;height:660px;
+  border-radius:10px;overflow:hidden;border:1px solid #333;
+}
+.sidebar{width:var(--sw);min-width:var(--sw);background:var(--bks);border-right:1px solid var(--bd);display:flex;flex-direction:column;padding:20px 0;overflow:hidden;}
+.brand{font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:0 20px;margin-bottom:28px;}
+.brand em{font-style:normal;font-weight:400;color:var(--tm);}
+.nitem{display:flex;align-items:center;gap:8px;padding:7px 20px;font-size:12px;font-weight:500;color:var(--ts);cursor:pointer;border-left:2px solid transparent;transition:all 0.1s;user-select:none;}
+.nitem:hover{color:var(--tp);background:var(--sfh);}
+.nitem.on{color:var(--tp);background:var(--sfa);border-left-color:var(--wh);}
+.nlabel{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--tm);padding:0 20px;margin:22px 0 6px;}
+.citem{padding:6px 20px;font-size:11px;color:var(--ts);cursor:pointer;border-left:2px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all 0.1s;user-select:none;}
+.citem:hover{color:var(--tp);background:var(--sfh);}
+.citem.on{color:var(--tp);background:var(--sfa);border-left-color:var(--wh);}
+.sfooter{margin-top:auto;padding:14px 20px;border-top:1px solid var(--bd);display:flex;align-items:center;gap:8px;}
+.avt{width:28px;height:28px;border-radius:50%;background:var(--sfa);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--ts);flex-shrink:0;}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:var(--bk);}
+.page{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.page.on{display:flex;}
+
+.phdr{padding:13px 20px;border-bottom:1px solid var(--bd);background:var(--sf);flex-shrink:0;}
+.phdr-t{font-size:13px;font-weight:600;}
+.phdr-s{font-size:11px;color:var(--tm);margin-top:1px;}
+
+.msgs{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:13px;}
+.msgs::-webkit-scrollbar{width:4px;}
+.msgs::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px;}
+
+.mu{align-self:flex-end;max-width:68%;}
+.mu-b{background:var(--wh);color:#0A0A0A;padding:9px 14px;border-radius:12px 12px 2px 12px;font-size:12px;line-height:1.5;}
+.mu-t{text-align:right;font-size:10px;color:var(--tm);margin-top:3px;}
+.mu-img{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.thumb{width:40px;height:40px;border-radius:3px;background:var(--sfa);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+
+.mai{align-self:flex-start;max-width:90%;}
+.mai-h{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.ai-av{width:24px;height:24px;border-radius:50%;background:var(--sfa);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:var(--ts);}
+.ai-n{font-size:12px;font-weight:600;}
+.ai-s{font-size:10px;color:var(--tm);}
+
+.ablock{background:var(--sf);border:1px solid var(--bd);border-radius:3px;padding:13px 15px;}
+.rrow{display:flex;align-items:center;gap:10px;margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid var(--bd);}
+.rbadge{padding:2px 9px;border-radius:2px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.rscore{font-size:12px;color:var(--ts);}
+.rscore b{color:var(--tp);}
+.summ{font-size:12px;line-height:1.6;margin-bottom:10px;}
+.elabel{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--tm);margin-bottom:6px;}
+.erow{display:flex;gap:8px;margin-bottom:5px;}
+.erisk{font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.etext{font-size:11px;color:var(--ts);line-height:1.4;}
+.etext b{color:var(--tp);}
+.disc{font-size:10px;color:var(--tm);font-style:italic;border-top:1px solid var(--bd);padding-top:8px;margin-top:8px;}
+.recs{margin-bottom:10px;}
+.rec{font-size:11px;color:var(--ts);padding:3px 0;display:flex;gap:7px;}
+.rec-arr{color:var(--tm);flex-shrink:0;}
+
+.prow{align-self:flex-start;max-width:88%;background:var(--sf);border:1px solid var(--bd);border-radius:3px;padding:9px 12px;display:flex;align-items:flex-start;gap:10px;}
+.pinfo{flex:1;min-width:0;}
+.pt{font-size:12px;font-weight:600;color:var(--tp);margin-bottom:2px;cursor:pointer;text-decoration:none;display:block;}
+.pt:hover{text-decoration:underline;}
+.pm{font-size:10px;color:var(--tm);margin-bottom:3px;}
+.pr{font-size:11px;color:var(--ts);font-style:italic;}
+.bkbtn{width:26px;height:26px;flex-shrink:0;border:1px solid var(--bd);border-radius:2px;background:transparent;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--tm);cursor:pointer;transition:all 0.15s;font-family:'Chakra Petch',monospace;}
+.bkbtn.saved{background:var(--sfa);border-color:var(--bdh);color:var(--tp);}
+
+.inarea{padding:13px 20px;border-top:1px solid var(--bd);background:var(--sf);flex-shrink:0;}
+.inprev{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.inrow{display:flex;gap:7px;}
+.upbtn{padding:8px 12px;background:transparent;border:1px solid var(--bd);border-radius:2px;color:var(--tm);font-size:15px;cursor:pointer;flex-shrink:0;line-height:1;font-family:'Chakra Petch',monospace;}
+.upbtn:hover{border-color:var(--bdh);color:var(--ts);}
+textarea.tinput{flex:1;padding:8px 13px;border:1px solid var(--bd);border-radius:2px;font-family:'Chakra Petch',monospace;font-size:12px;background:var(--bk);color:var(--tp);resize:none;outline:none;}
+textarea.tinput:focus{border-color:var(--tm);}
+textarea.tinput::placeholder{color:var(--tm);}
+.scanbtn{padding:8px 16px;background:var(--wh);color:#0A0A0A;border:none;border-radius:2px;font-family:'Chakra Petch',monospace;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
+.scanbtn:hover{opacity:.85;}
+.scanbtn:disabled{opacity:.4;cursor:default;}
+
+.loading{align-self:flex-start;background:var(--sf);border:1px solid var(--bd);border-radius:3px;padding:10px 14px;font-size:12px;color:var(--tm);display:none;align-items:center;gap:8px;}
+.loading.on{display:flex;}
+.spin{display:inline-block;animation:spin 1.2s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg)};}
+
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--tm);text-align:center;gap:8px;}
+.empty-icon{font-size:28px;}
+.empty-t{font-size:14px;font-weight:600;color:var(--ts);}
+.empty-s{font-size:12px;}
+
+.hpage{padding:28px 32px;overflow-y:auto;flex:1;}
+.hpage::-webkit-scrollbar{width:4px;}
+.hpage::-webkit-scrollbar-thumb{background:var(--bd);}
+.hhdr{margin-bottom:28px;}
+.hhdr h1{font-size:20px;font-weight:600;letter-spacing:.5px;}
+.hhdr p{font-size:12px;color:var(--tm);margin-top:4px;}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;height:calc(100% - 90px);}
+.hcol{background:var(--sf);border:1px solid var(--bd);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;}
+.hcolhdr{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.hcol-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--ts);}
+.hcol-c{font-size:10px;color:var(--tm);background:var(--sfa);padding:2px 7px;border-radius:2px;}
+.hcolbody{padding:8px;overflow-y:auto;flex:1;}
+.hcolbody::-webkit-scrollbar{width:3px;}
+.hcolbody::-webkit-scrollbar-thumb{background:var(--bd);}
+.mcard{padding:11px 13px;border:1px solid var(--bd);border-radius:2px;margin-bottom:5px;cursor:pointer;transition:all .1s;}
+.mcard:hover{border-color:var(--bdh);background:var(--sfh);}
+.mcard-t{font-size:13px;font-weight:600;}
+.mcard-s{font-size:11px;color:var(--tm);margin-top:2px;}
+.mcard-r{font-size:11px;color:var(--ts);margin-top:3px;font-style:italic;}
+.acard{padding:20px 16px;border:1px dashed var(--bd);border-radius:2px;text-align:center;cursor:pointer;margin-bottom:5px;transition:all .15s;}
+.acard:hover{border-color:var(--tm);background:var(--sfh);}
+.acard-i{font-size:20px;margin-bottom:6px;color:var(--tm);}
+.acard-t{font-size:12px;font-weight:600;margin-bottom:3px;}
+.acard-s{font-size:11px;color:var(--tm);line-height:1.4;}
+
+.spage{padding:28px 32px;overflow-y:auto;flex:1;}
+.spage::-webkit-scrollbar{width:4px;}
+.spage::-webkit-scrollbar-thumb{background:var(--bd);}
+.sphdr{margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;}
+.sphdr h1{font-size:20px;font-weight:600;}
+.sphdr p{font-size:12px;color:var(--tm);margin-top:3px;}
+.sinput{padding:7px 12px;border:1px solid var(--bd);border-radius:2px;background:var(--sf);color:var(--tp);font-family:'Chakra Petch',monospace;font-size:12px;outline:none;width:200px;}
+.sinput:focus{border-color:var(--tm);}
+.sinput::placeholder{color:var(--tm);}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;}
+.scard{background:var(--sf);border:1px solid var(--bd);border-radius:3px;padding:14px 16px;}
+.scard-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;}
+.scard-t{font-size:13px;font-weight:600;color:var(--tp);cursor:pointer;line-height:1.4;flex:1;margin-right:8px;}
+.scard-t:hover{text-decoration:underline;}
+.rmbtn{background:none;border:none;cursor:pointer;color:var(--tm);font-size:16px;flex-shrink:0;font-family:'Chakra Petch',monospace;padding:0;}
+.rmbtn:hover{color:var(--tp);}
+.scard-m{font-size:10px;color:var(--tm);margin-bottom:7px;}
+.scard-r{font-size:11px;color:var(--ts);font-style:italic;padding:7px 9px;background:var(--bk);border:1px solid var(--bd);border-radius:2px;margin-bottom:9px;line-height:1.5;}
+.scard-ftr{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--bd);}
+.scard-from{font-size:10px;color:var(--tm);}
+.scard-from span{color:var(--ts);}
+.viewbtn{font-size:10px;font-weight:600;color:var(--tp);text-decoration:none;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border:1px solid var(--bd);border-radius:2px;background:var(--sfh);}
+.viewbtn:hover{border-color:var(--bdh);}
+.sempty{text-align:center;margin-top:60px;color:var(--tm);font-size:13px;}
+</style>
+
+<div id="ps">
+<div class="sidebar">
+  <div class="brand">PATENT<em>SCAN</em></div>
+  <div class="nitem on" id="nav-home" onclick="goPage('home')">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 6.5L8 2l6 4.5V14H10v-3H6v3H2V6.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+    Home
+  </div>
+  <div class="nitem" id="nav-saved" onclick="goPage('saved')">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v13l-5-3-5 3V2z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+    Saved
+  </div>
+  <div class="nlabel">Chats</div>
+  <div class="citem" onclick="newChat()" style="color:var(--tm);">+ New scan</div>
+  <div id="chatlist"></div>
+  <div class="sfooter">
+    <div class="avt">T</div>
+    <div>
+      <div style="font-size:12px;font-weight:500;">Tejas</div>
+      <div style="font-size:10px;color:var(--tm);">Imperial · MSc</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="page on" id="page-home">
+    <div class="hpage">
+      <div class="hhdr">
+        <h1>Patent Scanner</h1>
+        <p>Scan your designs against live USPTO data before you ship.</p>
+      </div>
+      <div class="hgrid">
+        <div class="hcol">
+          <div class="hcolhdr"><span class="hcol-t">Recent Scans</span><span class="hcol-c" id="home-chat-count">0</span></div>
+          <div class="hcolbody" id="home-chat-list">
+            <div class="acard" onclick="newChat();goPage('chat')">
+              <div class="acard-i">+</div>
+              <div class="acard-t">New Scan</div>
+              <div class="acard-s">Upload a design image and describe your product</div>
+            </div>
+          </div>
+        </div>
+        <div class="hcol">
+          <div class="hcolhdr"><span class="hcol-t">Saved Patents</span><span class="hcol-c" id="home-saved-count">0</span></div>
+          <div class="hcolbody" id="home-saved-list">
+            <div style="font-size:12px;color:var(--tm);padding:16px 12px;text-align:center;">No saved patents yet. Bookmark patents from chat scans.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-chat">
+    <div class="phdr">
+      <div class="phdr-t" id="chat-title">New Scan</div>
+      <div class="phdr-s">USPTO Live · Claude Vision</div>
+    </div>
+    <div class="msgs" id="msgs">
+      <div class="empty" id="empty-state">
+        <div class="empty-icon">&#9672;</div>
+        <div class="empty-t">Start a new scan</div>
+        <div class="empty-s">Upload a product image and describe your design below.</div>
+      </div>
+    </div>
+    <div class="loading" id="loading"><span class="spin">&#9675;</span><span id="loading-text">Analyzing...</span></div>
+    <div class="inarea">
+      <div class="inprev" id="inprev" style="display:none;">
+        <div class="thumb" id="prev-thumb" style="font-size:22px;"></div>
+        <span style="font-size:10px;color:var(--tm);" id="prev-name"></span>
+        <span style="font-size:10px;color:var(--tm);cursor:pointer;margin-left:4px;" onclick="clearImg()">× remove</span>
+      </div>
+      <div class="inrow">
+        <button class="upbtn" onclick="pickImg()" title="Upload image">&#8679;</button>
+        <textarea class="tinput" id="tinput" rows="2" placeholder="Upload an image · Describe your design — category, materials, key ornamental features..."></textarea>
+        <button class="scanbtn" id="scanbtn" onclick="doScan()">Scan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-saved">
+    <div class="spage">
+      <div class="sphdr">
+        <div>
+          <h1>Saved Patents</h1>
+          <p id="saved-count-label">0 patents flagged for review</p>
+        </div>
+        <input class="sinput" type="text" placeholder="Search..." id="ssearch" oninput="renderSaved()">
+      </div>
+      <div id="sgrid" class="sgrid"></div>
+      <div id="sempty" class="sempty" style="display:none;">No saved patents yet. Bookmark patents from chat scans.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+var state={
+  page:'home',
+  activeChatId:null,
+  chats:{},
+  saved:{},
+  hasImage:false,
+  imageName:'',
+  imageEmoji:'',
+  scanning:false
+};
+
+var demoScans=[
+  {
+    id:'demo1',title:'Quilted chain-strap bag',
+    msgs:[
+      {type:'user',img:true,imgEmoji:'&#128092;',imgName:'bag_front.jpg',text:'Classic quilted flap bag, diamond stitching, gold chain strap. Planning to launch SS26.',time:'4:07 PM'},
+      {type:'analysis',risk:'HIGH',score:74,summary:'The diamond quilting pattern combined with a chain strap closely mirrors several active Chanel design patents. The ornamental arrangement of stitching channels and hardware placement poses meaningful infringement risk for US and EU markets.',elements:[{r:'HIGH',rc:'var(--rh)',el:'Diamond quilting',note:'Pattern spacing matches Chanel\'s D432,220 closely'},{r:'MED',rc:'var(--rm)',el:'Chain strap',note:'Interlaced construction overlaps with D551,991'},{r:'LOW',rc:'var(--rl)',el:'Flap closure',note:'Common functional element, low standalone risk'}],recs:['Modify quilting channel depth and spacing by >15% from referenced patents','Replace interlaced chain with solid-link or resin alternative','Commission FTO opinion before production']},
+      {type:'patent',title:'Handbag with quilted exterior surface',num:'D432,220',assignee:'Chanel Inc.',filed:'2001-03-14',id:'18045902',reason:'Diamond quilting proportions and channel depth match closely',url:'https://patents.google.com/patent/USD432220'},
+      {type:'patent',title:'Ornamental handbag with chain strap',num:'D551,991',assignee:'Chanel Inc.',filed:'2006-09-22',id:'18052187',reason:'Interlaced chain and leather strap construction is ornamentally similar',url:'https://patents.google.com/patent/USD551991'},
+      {type:'patent',title:'Bag with decorative stitching pattern',num:'D688,451',assignee:'Louis Vuitton Malletier',filed:'2012-11-08',id:'18061334',reason:'Stitching channel depth and spacing within similar tolerance range',url:'https://patents.google.com/patent/USD688451'}
+    ]
+  },
+  {
+    id:'demo2',title:'White low-top sneaker',
+    msgs:[
+      {type:'user',img:true,imgEmoji:'&#128095;',imgName:'sneaker_side.jpg',text:'Clean white leather low-top, perforated toe cap, 3 eyelets, minimal branding. Streetwear line.',time:'2:31 PM'},
+      {type:'analysis',risk:'MED',score:41,summary:'The perforated toe cap and overall silhouette present moderate risk relative to several Nike and Adidas active design patents, though the minimal branding reduces overall exposure. The specific eyelet count and placement should be reviewed.',elements:[{r:'MED',rc:'var(--rm)',el:'Perforated toe cap',note:'Pattern resembles Nike\'s perforation arrangement in D723,640'},{r:'LOW',rc:'var(--rl)',el:'Overall silhouette',note:'Low-top profile is generic; not independently protectable'},{r:'LOW',rc:'var(--rl)',el:'Eyelet placement',note:'3-eyelet row is common across unprotected designs'}],recs:['Alter toe cap perforation pattern shape or density','Consider angled or irregular perforation arrangement','Minimal branding is favorable — maintain this choice']},
+      {type:'patent',title:'Shoe with perforated upper',num:'D723,640',assignee:'Nike Inc.',filed:'2013-06-20',id:'18067201',reason:'Toe cap perforation arrangement has overlapping ornamental elements',url:'https://patents.google.com/patent/USD723640'},
+      {type:'patent',title:'Athletic shoe upper construction',num:'D791,480',assignee:'Adidas AG',filed:'2015-08-11',id:'18073445',reason:'Side profile silhouette and eyelet row share visual similarity',url:'https://patents.google.com/patent/USD791480'}
+    ]
+  },
+  {
+    id:'demo3',title:'Geometric print maxi dress',
+    msgs:[
+      {type:'user',img:true,imgEmoji:'&#128248;',imgName:'dress_flat.jpg',text:'Maxi dress, abstract geometric print, square neckline, side slit. Ready-to-wear collection.',time:'11:14 AM'},
+      {type:'analysis',risk:'LOW',score:12,summary:'This design presents low infringement risk. Abstract geometric prints are generally difficult to protect as design patents unless they contain highly distinctive and specific ornamental elements. The garment silhouette is common and non-protectable.',elements:[{r:'LOW',rc:'var(--rl)',el:'Geometric print',note:'Abstract patterns require very specific similarity to infringe'},{r:'LOW',rc:'var(--rl)',el:'Square neckline',note:'Standard functional/ornamental element with no active conflicts'},{r:'LOW',rc:'var(--rl)',el:'Side slit placement',note:'Common design feature across unprotected category'}],recs:['No immediate action required','Register your own design patent to protect this specific print','Monitor competitor filings in ready-to-wear category']},
+      {type:'patent',title:'Garment with ornamental surface design',num:'D812,300',assignee:'Anthropologie Inc.',filed:'2017-04-03',id:'18089102',reason:'Surface print category match only — specific geometry is distinct',url:'https://patents.google.com/patent/USD812300'}
+    ]
+  }
+];
+
+function goPage(p){
+  state.page=p;
+  document.querySelectorAll('.page').forEach(function(el){el.classList.remove('on');});
+  document.getElementById('page-'+p).classList.add('on');
+  document.querySelectorAll('.nitem').forEach(function(el){el.classList.remove('on');});
+  var navEl=document.getElementById('nav-'+p);
+  if(navEl) navEl.classList.add('on');
+  if(p==='home') renderHome();
+  if(p==='saved') renderSaved();
+  if(p==='chat' && !state.activeChatId) newChat();
+}
+
+function openChat(id){
+  state.activeChatId=id;
+  document.querySelectorAll('.citem').forEach(function(el){el.classList.remove('on');});
+  var el=document.getElementById('ci-'+id);
+  if(el) el.classList.add('on');
+  goPage('chat');
+  renderChat();
+}
+
+function newChat(){
+  var id='chat_'+Date.now();
+  state.activeChatId=id;
+  state.chats[id]={id:id,title:'New Scan',msgs:[]};
+  renderSidebar();
+  goPage('chat');
+  renderChat();
+}
+
+function renderSidebar(){
+  var cl=document.getElementById('chatlist');
+  var html='';
+  var keys=Object.keys(state.chats).reverse();
+  keys.forEach(function(id){
+    var c=state.chats[id];
+    var on=state.activeChatId===id?' on':'';
+    html+='<div class="citem'+on+'" id="ci-'+id+'" onclick="openChat(\''+id+'\')">'+esc(c.title)+'</div>';
+  });
+  cl.innerHTML=html;
+}
+
+function renderHome(){
+  var chats=Object.values(state.chats);
+  var saved=Object.values(state.saved);
+  document.getElementById('home-chat-count').textContent=chats.length;
+  document.getElementById('home-saved-count').textContent=saved.length;
+  var cl=document.getElementById('home-chat-list');
+  var html='<div class="acard" onclick="newChat();goPage(\'chat\')"><div class="acard-i">+</div><div class="acard-t">New Scan</div><div class="acard-s">Upload a design image and describe your product</div></div>';
+  chats.slice().reverse().forEach(function(c){
+    html+='<div class="mcard" onclick="openChat(\''+c.id+'\')"><div class="mcard-t">'+esc(c.title)+'</div><div class="mcard-s">'+c.msgs.length+' messages</div></div>';
+  });
+  cl.innerHTML=html;
+  var sl=document.getElementById('home-saved-list');
+  if(saved.length===0){
+    sl.innerHTML='<div style="font-size:12px;color:var(--tm);padding:16px 12px;text-align:center;">No saved patents yet. Bookmark patents from chat scans.</div>';
+  } else {
+    var shtml='';
+    saved.forEach(function(p){
+      shtml+='<div class="mcard" onclick="openLink(\''+p.url+'\')"><div class="mcard-t">'+esc(p.title)+'</div><div class="mcard-s">'+esc(p.assignee)+' · '+esc(p.filed)+'</div><div class="mcard-r">'+esc(p.reason)+'</div></div>';
+    });
+    sl.innerHTML=shtml;
+  }
+}
+
+function renderChat(){
+  if(!state.activeChatId) return;
+  var chat=state.chats[state.activeChatId];
+  if(!chat) return;
+  document.getElementById('chat-title').textContent=chat.title;
+  document.querySelectorAll('.citem').forEach(function(el){el.classList.remove('on');});
+  var el=document.getElementById('ci-'+state.activeChatId);
+  if(el) el.classList.add('on');
+  var container=document.getElementById('msgs');
+  var empty=document.getElementById('empty-state');
+  if(chat.msgs.length===0){
+    empty.style.display='flex';
+    container.innerHTML='';
+    container.appendChild(empty);
+    return;
+  }
+  empty.style.display='none';
+  var html='';
+  chat.msgs.forEach(function(m,i){
+    if(m.type==='user'){
+      html+='<div class="mu">';
+      if(m.img) html+='<div class="mu-img"><div class="thumb">'+m.imgEmoji+'</div><span style="font-size:10px;color:var(--tm);">'+esc(m.imgName)+'</span></div>';
+      html+='<div class="mu-b">'+esc(m.text)+'</div><div class="mu-t">'+m.time+'</div></div>';
+    } else if(m.type==='analysis'){
+      var rc=m.risk==='HIGH'?'var(--rh)':m.risk==='CRITICAL'?'var(--rc)':m.risk==='MED'||m.risk==='MEDIUM'?'var(--rm)':'var(--rl)';
+      html+='<div class="mai"><div class="mai-h"><div class="ai-av">IP</div><span class="ai-n">Patent Analysis</span><span class="ai-s">USPTO · Live Data</span></div>';
+      html+='<div class="ablock"><div class="rrow"><div class="rbadge" style="background:'+rc+';color:#000;">'+m.risk+'</div><div class="rscore">Risk Score: <b>'+m.score+'/100</b></div></div>';
+      html+='<div class="summ">'+esc(m.summary)+'</div>';
+      html+='<div class="elabel">Element Analysis</div>';
+      m.elements.forEach(function(e){
+        html+='<div class="erow"><span class="erisk" style="color:'+e.rc+';">'+e.r+'</span><div class="etext"><b>'+esc(e.el)+'</b> — '+esc(e.note)+'</div></div>';
+      });
+      if(m.recs && m.recs.length){
+        html+='<div class="elabel" style="margin-top:10px;">Recommendations</div><div class="recs">';
+        m.recs.forEach(function(r){html+='<div class="rec"><span class="rec-arr">&#8594;</span>'+esc(r)+'</div>';});
+        html+='</div>';
+      }
+      html+='<div class="disc">AI-assisted preliminary analysis only. Consult qualified IP counsel before making product decisions.</div></div></div>';
+    } else if(m.type==='patent'){
+      var saved=!!state.saved[m.id];
+      html+='<div class="prow"><div class="pinfo">';
+      html+='<a class="pt" href="'+m.url+'" target="_blank">'+esc(m.title)+' &#8599;</a>';
+      html+='<div class="pm">'+esc(m.assignee)+' · Filed '+esc(m.filed)+' · '+esc(m.id)+'</div>';
+      html+='<div class="pr">'+esc(m.reason)+'</div></div>';
+      html+='<button class="bkbtn'+(saved?' saved':'')+ '" id="bk-'+m.id+'" onclick="toggleSave('+JSON.stringify(m)+',\''+state.activeChatId+'\')" title="'+(saved?'Remove bookmark':'Save patent')+'">'+(saved?'&#128278;':'&#9671;')+'</button>';
+      html+='</div>';
+    }
+  });
+  container.innerHTML=html;
+  container.scrollTop=container.scrollHeight;
+}
+
+function renderSaved(){
+  var search=(document.getElementById('ssearch').value||'').toLowerCase();
+  var saved=Object.values(state.saved);
+  var filtered=search?saved.filter(function(p){return p.title.toLowerCase().includes(search)||p.assignee.toLowerCase().includes(search);}):saved;
+  document.getElementById('saved-count-label').textContent=saved.length+' patent'+(saved.length!==1?'s':'')+' flagged for review';
+  var grid=document.getElementById('sgrid');
+  var sempty=document.getElementById('sempty');
+  if(filtered.length===0){
+    grid.innerHTML='';
+    sempty.style.display='block';
+    sempty.textContent=search?'No patents match your search.':'No saved patents yet. Bookmark patents from chat scans.';
+  } else {
+    sempty.style.display='none';
+    var html='';
+    filtered.forEach(function(p){
+      html+='<div class="scard"><div class="scard-hdr"><a class="scard-t" href="'+p.url+'" target="_blank">'+esc(p.title)+'</a><button class="rmbtn" onclick="removePatent(\''+p.id+'\')">&#215;</button></div>';
+      html+='<div class="scard-m">'+esc(p.assignee)+' · Filed '+esc(p.filed)+'</div>';
+      html+='<div class="scard-r">'+esc(p.reason)+'</div>';
+      html+='<div class="scard-ftr"><div class="scard-from">From: <span>'+esc(p.chatTitle||'Scan')+'</span></div><a class="viewbtn" href="'+p.url+'" target="_blank">View &#8599;</a></div>';
+      html+='</div>';
+    });
+    grid.innerHTML=html;
+  }
+}
+
+function toggleSave(patent,chatId){
+  var chat=state.chats[chatId];
+  if(state.saved[patent.id]){
+    delete state.saved[patent.id];
+  } else {
+    state.saved[patent.id]=Object.assign({},patent,{chatTitle:chat?chat.title:'Scan',savedAt:Date.now()});
+  }
+  renderChat();
+  if(state.page==='saved') renderSaved();
+  renderHome();
+}
+
+function removePatent(id){
+  delete state.saved[id];
+  renderSaved();
+  renderHome();
+  if(state.page==='chat') renderChat();
+}
+
+var steps=['Extracting ornamental elements...','Searching USPTO design patents...','Generating risk report...'];
+var stepIdx=0;
+var stepTimer=null;
+
+function doScan(){
+  if(state.scanning) return;
+  var txt=document.getElementById('tinput').value.trim();
+  if(!txt && !state.hasImage) return;
+  var chat=state.chats[state.activeChatId];
+  if(!chat) return;
+  state.scanning=true;
+  document.getElementById('scanbtn').disabled=true;
+  var empty=document.getElementById('empty-state');
+  empty.style.display='none';
+
+  var userMsg={type:'user',img:state.hasImage,imgEmoji:state.imageEmoji||'&#128248;',imgName:state.imageName||'image.jpg',text:txt||'[Image uploaded]',time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})};
+  if(!txt) userMsg.text='[Image: '+state.imageName+']';
+  if(txt && state.hasImage) userMsg.text=txt;
+  chat.msgs.push(userMsg);
+  if(chat.title==='New Scan' && txt) chat.title=txt.slice(0,38)+(txt.length>38?'...':'');
+  document.getElementById('chat-title').textContent=chat.title;
+  renderSidebar();
+  renderChat();
+  document.getElementById('tinput').value='';
+  clearImg();
+
+  stepIdx=0;
+  var loadEl=document.getElementById('loading');
+  var loadTxt=document.getElementById('loading-text');
+  loadEl.classList.add('on');
+  loadTxt.textContent=steps[0];
+  var msgs=document.getElementById('msgs');
+  msgs.scrollTop=msgs.scrollHeight;
+  stepTimer=setInterval(function(){
+    stepIdx=(stepIdx+1)%steps.length;
+    loadTxt.textContent=steps[stepIdx];
+  },1200);
+
+  setTimeout(function(){
+    clearInterval(stepTimer);
+    loadEl.classList.remove('on');
+    var demo=demoScans[Math.floor(Math.random()*demoScans.length)];
+    demo.msgs.slice(1).forEach(function(m){chat.msgs.push(m);});
+    state.scanning=false;
+    document.getElementById('scanbtn').disabled=false;
+    renderChat();
+  },3600);
+}
+
+function pickImg(){
+  var imgs=[
+    {emoji:'&#128092;',name:'bag_quilted.jpg'},
+    {emoji:'&#128095;',name:'sneaker_white.jpg'},
+    {emoji:'&#128248;',name:'dress_geometric.jpg'},
+    {emoji:'&#128054;',name:'product_photo.jpg'}
+  ];
+  var pick=imgs[Math.floor(Math.random()*imgs.length)];
+  state.hasImage=true;
+  state.imageName=pick.name;
+  state.imageEmoji=pick.emoji;
+  document.getElementById('prev-thumb').innerHTML=pick.emoji;
+  document.getElementById('prev-name').textContent=pick.name+' · ';
+  document.getElementById('inprev').style.display='flex';
+}
+
+function clearImg(){
+  state.hasImage=false;
+  state.imageName='';
+  state.imageEmoji='';
+  document.getElementById('inprev').style.display='none';
+}
+
+function esc(s){
+  if(!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+demoScans.forEach(function(d){state.chats[d.id]=d;});
+state.activeChatId=demoScans[0].id;
+renderSidebar();
+openChat(demoScans[0].id);
+renderHome();
+</script>

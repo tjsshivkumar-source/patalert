@@ -32,12 +32,14 @@ Return ONLY valid JSON, no markdown fences:
   });
 
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-sonnet-5',
     max_tokens: 1024,
+    thinking: { type: 'disabled' },
     messages: [{ role: 'user', content }]
   });
 
-  const text = response.content[0].type === 'text' ? response.content[0].text : '{}';
+  const textBlock = response.content.find(b => b.type === 'text');
+  const text = textBlock ? textBlock.text : '{}';
   return JSON.parse(text.replace(/```json|```/g, '').trim());
 }
 
@@ -144,8 +146,9 @@ async function assessRisk(elements: any, patents: Patent[], source: 'live' | 'tr
     : `No USPTO results returned. Use your training knowledge of well-known fashion design patents to assess risk. Cite specific real patent numbers where relevant (e.g. Chanel D432220, Nike D723640, Louboutin D505085).`;
 
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-sonnet-5',
     max_tokens: 2048,
+    thinking: { type: 'disabled' },
     messages: [{
       role: 'user',
       content: `You are a design patent attorney conducting a freedom-to-operate analysis for a fashion product.
@@ -178,7 +181,8 @@ Return ONLY valid JSON, no markdown fences:
     }]
   });
 
-  const text = response.content[0].type === 'text' ? response.content[0].text : '{}';
+  const textBlock = response.content.find(b => b.type === 'text');
+  const text = textBlock ? textBlock.text : '{}';
   const assessment = JSON.parse(text.replace(/```json|```/g, '').trim());
 
   // Merge similarity reasons back into patent objects
